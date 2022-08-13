@@ -1,6 +1,6 @@
 import { IContact } from "./contact";
 
-interface IPageableContacts {
+export interface IPageableContacts {
   content: IContact[],
   pageable: {
     sort: {
@@ -22,5 +22,3 @@ interface IPageableContacts {
   first: boolean,
   empty: boolean
 }
-
-export default IPageableContacts;
