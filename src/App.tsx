@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import contactsService from './api';
+import ContactForm from './components/ContactForm';
+import Contacts from './components/Contacts';
+import Header from './components/Header';
+import { IContact } from './interfaces/contact';
 
 function App() {
+  const [contacts, setContacts] = useState<IContact[]>([]);
+  const [filter, setFilter] = useState<string>("");
+
+  useEffect(() => {
+    (async function () {
+      await contactsService.get("")
+        .then(res => setContacts(res.data.content))
+    })();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header
+        filter={filter}
+        setFilter={setFilter}
+      />
+      <Contacts
+        contacts={contacts.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))}
+        setContacts={setContacts}
+      />
+      <ContactForm
+        setContacts={setContacts}
+      />
     </div>
   );
 }
