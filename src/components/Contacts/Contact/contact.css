@@ -1,0 +1,36 @@
+.contact {
+  background-color: antiquewhite;
+  border-radius: 5px;
+}
+
+.contact-wrapper {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact-header img {
+  width: 100px;
+  border-radius: 1rem;
+  box-sizing: border-box;
+}
+
+.contact-name {
+  margin: auto;
+  max-width: fit-content;
+}
+
+.contact-info {
+  display: inherit;
+  flex-direction: column;
+}
+
+.contact-info p {
+  margin: 0;
+}

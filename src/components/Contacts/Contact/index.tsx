@@ -1,5 +1,6 @@
 import contactsService from "../../../api";
 import { IContact } from "../../../interfaces/contact";
+import "./contact.css";
 
 interface Props {
   contact: IContact,
@@ -17,16 +18,22 @@ const Contact = ({ contact, setContacts }: Props) => {
   }
   const { id, name, number, email, pictureUrl } = contact;
   return (
-    <div>
-      <div>
-        <img src={pictureUrl} alt={name} />
-        <h2>{name}</h2>
+    <div className="contact">
+      <div className="contact-wrapper">
+        <div className="contact-header">
+          <div className="contact-img">
+            <img src={pictureUrl} alt={name} />
+          </div>
+          <div className="contact-name">
+            <h2>{name}</h2>
+          </div>
+        </div>
+        <div className="contact-info">
+          <p>Number: {number}</p>
+          <p>Email: {email}</p>
+        </div>
       </div>
-      <div>
-        <p>Number: {number}</p>
-        <p>Email: {email}</p>
-      </div>
-      <div>
+      <div className="contact-delete">
         <button onClick={() => { deleteContact(id) }}>Delete</button>
       </div>
     </div>

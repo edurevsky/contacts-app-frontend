@@ -1,5 +1,6 @@
 import { IContact } from "../../interfaces/contact";
 import Contact from "./Contact";
+import "./contacts.css";
 
 interface Props {
   contacts: IContact[],
@@ -9,7 +10,7 @@ interface Props {
 const Contacts = ({ contacts, setContacts }: Props) => {
 
   return (
-    <div>
+    <div className="contacts">
       {contacts.map(c => (
         <div key={c.id}>
           <Contact
