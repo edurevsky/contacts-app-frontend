@@ -8,27 +8,31 @@ import { IContact } from "../../interfaces/contact";
 import { IPageableContacts } from "../../interfaces/pageable-contacts";
 
 const ContactsPage = () => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState<number>(0);
   const [pageable, setPageable] = useState<IPageableContacts>();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [filter, setFilter] = useState<string>("");
 
   useEffect(() => {
-    (async function () {
-      console.log("ok");
+    (async () => {
       await contactsService.get<IPageableContacts>(`?page=${page}&size=15`)
         .then(res => {
           setPageable(res.data);
           setContacts(res.data.content);
         })
-        .catch((_) => {
+        .catch(_ => {
           alert("Something went wrong")
         });
     })();
   }, [page]);
 
   return (
-    <>
+    <div
+      style={{
+        margin: "auto",
+        maxWidth: "1440px"
+      }}
+    >
       <Header
         filter={filter}
         setFilter={setFilter}
@@ -44,7 +48,7 @@ const ContactsPage = () => {
       <ContactForm
         setContacts={setContacts}
       />
-    </>
+    </div>
   );
 }
 

@@ -1,3 +1,4 @@
+import "./header.css";
 
 interface Props {
   filter: string,
@@ -6,8 +7,9 @@ interface Props {
 
 const Header = ({ filter, setFilter }: Props) => {
   return (
-    <div>
+    <div className="header">
       <input
+        className="filter"
         type="text"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}

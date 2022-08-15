@@ -6,7 +6,7 @@ interface Props {
 }
 
 const Pagination = ({ pageable, setPage }: Props) => {
-  const { totalPages, numberOfElements, totalElements, last, first } = pageable
+  const { totalPages, last, first } = pageable
   const pageNumber = pageable.pageable.pageNumber + 1
   return (
     <div>
@@ -15,11 +15,13 @@ const Pagination = ({ pageable, setPage }: Props) => {
           <button onClick={() => setPage(value => value - 1)}>Previous Page</button>
         </div>
       )}
+      {/*
       <div>
         <span>Showing {numberOfElements} of {totalElements} Contacts</span>
-      </div>
+      </div> 
+      */}
       <div>
-        <span>page {pageNumber} of {totalPages}</span>
+        <span>Page {pageNumber} of {totalPages}</span>
       </div>
       {!last && (
         <div>

@@ -8,13 +8,12 @@ interface Props {
 }
 
 const Contact = ({ contact, setContacts }: Props) => {
-  const deleteContact = async function (id: number) {
-    const request = await contactsService.delete(`${id}`) ;
-    if (request.status !== 204) {
-      alert(`An error occurred while trying to delete your contact`)
-      return;
-    }
-    setContacts(contacts => contacts.filter(c => c.id !== id));
+  const deleteContact = async (id: number) => {
+    await contactsService.delete(`${id}`)
+      .then(_ => setContacts(contacts => contacts.filter(c => c.id !== id)))
+      .catch(_ => {
+        alert("An error occurred");
+      });
   }
   const { id, name, number, email, pictureUrl } = contact;
   return (
@@ -32,9 +31,14 @@ const Contact = ({ contact, setContacts }: Props) => {
           <p>Number: {number}</p>
           <p>Email: {email}</p>
         </div>
-      </div>
-      <div className="contact-delete">
-        <button onClick={() => { deleteContact(id) }}>Delete</button>
+        <div className="contact-operations">
+          <button
+            className="delete-btn"
+            onClick={() => { deleteContact(id) }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );

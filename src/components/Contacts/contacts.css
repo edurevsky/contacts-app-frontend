@@ -3,3 +3,21 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 5px;
 }
+
+@media (max-width: 1024px) {
+  .contacts {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .contacts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .contacts {
+    grid-template-columns: 1fr;
+  }
+}
