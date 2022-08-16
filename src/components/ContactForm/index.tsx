@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { contactsService } from "../../api";
+import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 
 interface Props {
@@ -12,11 +13,16 @@ const ContactForm = ({ setContacts }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [pictureUrl, setPictureUrl] = useState<string>("");
+  const { token } = useContext(AuthContext);
 
   const saveContact = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const contact = { name, email, number, pictureUrl }
-    await contactsService.post("", contact)
+    await contactsService.post("", contact, {
+      headers: {
+        'Authorization': token as string
+      }
+    })
       .then((res: AxiosResponse) => {
         setContacts(contacts => [...contacts, res.data]);
       })

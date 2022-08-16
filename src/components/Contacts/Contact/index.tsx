@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { contactsService } from "../../../api";
+import { AuthContext } from "../../../contexts/AuthContext/auth-context";
 import { IContact } from "../../../interfaces/contact";
 import "./contact.css";
 
@@ -8,8 +10,14 @@ interface Props {
 }
 
 const Contact = ({ contact, setContacts }: Props) => {
+  const { token } = useContext(AuthContext);
+
   const deleteContact = async (id: number) => {
-    await contactsService.delete(`${id}`)
+    await contactsService.delete(`${id}`, {
+      headers: {
+        'Authorization': token as string
+      }
+    })
       .then(_ => setContacts(contacts => contacts.filter(c => c.id !== id)))
       .catch(_ => {
         alert("An error occurred");
