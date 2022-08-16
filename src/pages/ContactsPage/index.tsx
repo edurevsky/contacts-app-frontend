@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import contactsService from "../../api";
+import { useContext, useEffect, useState } from "react";
+import { contactsService } from "../../api";
 import ContactForm from "../../components/ContactForm";
 import Contacts from "../../components/Contacts";
 import Header from "../../components/Header";
 import Pagination from "../../components/Pagination";
+import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 import { IPageableContacts } from "../../interfaces/pageable-contacts";
 
@@ -12,11 +13,17 @@ const ContactsPage = () => {
   const [pageable, setPageable] = useState<IPageableContacts>();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [filter, setFilter] = useState<string>("");
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
-      await contactsService.get<IPageableContacts>(`?page=${page}&size=15`)
+      await contactsService.get<IPageableContacts>(`?page=${page}&size=15`, {
+        headers: {
+          'Authorization': token as string
+        }
+      })
         .then(res => {
+          console.log("ok");
           setPageable(res.data);
           setContacts(res.data.content);
         })
@@ -24,7 +31,7 @@ const ContactsPage = () => {
           alert("Something went wrong")
         });
     })();
-  }, [page]);
+  }, [page, token]);
 
   return (
     <div

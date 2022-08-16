@@ -1,7 +1,11 @@
 import axios from "axios";
 
-const contactsService = axios.create({
-  baseURL: 'http://localhost:8080/contacts'
+const base = 'http://localhost:8080';
+
+export const contactsService = axios.create({
+  baseURL: `${base}/contacts`
 });
 
-export default contactsService;
+export const loginService = axios.create({
+  baseURL: `${base}/login`
+});

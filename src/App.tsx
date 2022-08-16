@@ -1,8 +1,11 @@
-import ContactsPage from "./pages/ContactsPage";
+import { AuthProvider } from "./contexts/AuthContext/auth-context";
+import AppPage from "./pages/AppPage";
 
 function App() {
   return (
-    <ContactsPage />
+    <AuthProvider>
+      <AppPage />
+    </AuthProvider>
   )
 }
 

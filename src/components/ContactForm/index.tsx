@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
-import contactsService from "../../api";
+import { contactsService } from "../../api";
 import { IContact } from "../../interfaces/contact";
 
 interface Props {

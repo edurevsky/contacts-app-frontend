@@ -1,4 +1,4 @@
-import contactsService from "../../../api";
+import { contactsService } from "../../../api";
 import { IContact } from "../../../interfaces/contact";
 import "./contact.css";
 

@@ -1,8 +1,11 @@
 .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 1rem 0;
 }
 
 .filter {
   box-sizing: border-box;
-  width: 100%;
+  width: 95%;
 }
