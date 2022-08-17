@@ -8,10 +8,10 @@ interface Props {
 }
 
 const Header = ({ filter, setFilter }: Props) => {
-  const { deleteToken } = useContext(AuthContext);
+  const { invalidateSession } = useContext(AuthContext);
 
   const performLogout = (e: React.FormEvent<HTMLFormElement>) => {
-    deleteToken();
+    invalidateSession();
   }
 
   return (

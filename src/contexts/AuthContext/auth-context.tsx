@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const deleteRefreshToken = () => {
-    localStorage.removeItem("cappAccessToken");
+    localStorage.removeItem("cappRefreshToken");
     setRefreshJwtToken(null);
   }
 
