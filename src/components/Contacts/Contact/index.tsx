@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { contactsService } from "../../../api";
+import { contactsService, refreshTokenService } from "../../../api";
 import { AuthContext } from "../../../contexts/AuthContext/auth-context";
 import { IContact } from "../../../interfaces/contact";
 import "./contact.css";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Contact = ({ contact, setContacts }: Props) => {
-  const { token } = useContext(AuthContext);
+  const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
 
   const deleteContact = async (id: number) => {
     await contactsService.delete(`${id}`, {
@@ -21,6 +21,7 @@ const Contact = ({ contact, setContacts }: Props) => {
       .then(_ => setContacts(contacts => contacts.filter(c => c.id !== id)))
       .catch(_ => {
         alert("An error occurred");
+        refreshTokenService(refreshToken as string, setToken, invalidateSession);
       });
   }
   const { id, name, number, email, pictureUrl } = contact;

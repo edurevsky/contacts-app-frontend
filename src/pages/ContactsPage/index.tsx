@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { contactsService } from "../../api";
+import { contactsService, refreshTokenService } from "../../api";
 import ContactForm from "../../components/ContactForm";
 import Contacts from "../../components/Contacts";
 import Header from "../../components/Header";
@@ -13,11 +13,12 @@ const ContactsPage = () => {
   const [pageable, setPageable] = useState<IPageableContacts>();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [filter, setFilter] = useState<string>("");
-  const { token } = useContext(AuthContext);
+  const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
 
   useEffect(() => {
-    (async () => {
-      await contactsService.get<IPageableContacts>(`?page=${page}&size=15`, {
+    const fetchContacts = async () => {
+      console.log(token);
+      return await contactsService.get<IPageableContacts>(`?page=${page}&size=15`, {
         headers: {
           'Authorization': token as string
         }
@@ -28,10 +29,11 @@ const ContactsPage = () => {
           setContacts(res.data.content);
         })
         .catch(_ => {
-          alert("Something went wrong")
-        });
-    })();
-  }, [page, token]);
+          refreshTokenService(refreshToken as string, setToken, invalidateSession);
+        })
+    };
+    fetchContacts();
+  }, [invalidateSession, page, refreshToken, setToken, token]);
 
   return (
     <div

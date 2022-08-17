@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import React, { useContext, useState } from "react";
-import { contactsService } from "../../api";
+import { contactsService, refreshTokenService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 
@@ -13,7 +13,7 @@ const ContactForm = ({ setContacts }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [pictureUrl, setPictureUrl] = useState<string>("");
-  const { token } = useContext(AuthContext);
+  const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
 
   const saveContact = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,6 +28,7 @@ const ContactForm = ({ setContacts }: Props) => {
       })
       .catch(_ => {
         alert("An error occurred, try again later.");
+        refreshTokenService(refreshToken as string, setToken, invalidateSession);
       })
       .finally(() => {
         clearInputs();
