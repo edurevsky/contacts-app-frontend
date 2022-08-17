@@ -3,7 +3,6 @@
 # [Done] Delete Contact
 # [Done] Contact Pagination
 # [Done] Auth
+# [Done] Refresh the token somehow
 # [] CSS
 # [] Update Contact
-# [] Validate the token before every request
-# [] Refresh the token somehow
