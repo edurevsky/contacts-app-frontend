@@ -42,11 +42,18 @@ const Contact = ({ contact, setContacts }: Props) => {
         </div>
         <div className="contact-operations">
           <button
-            className="delete-btn"
+            className="op-btn"
             onClick={() => { deleteContact(id) }}
           >
             Delete
           </button>
+          <form action={`mailto:${email}`}>
+            <button
+              className="op-btn"
+            >
+              Send mail
+            </button>
+          </form>
         </div>
       </div>
     </div>

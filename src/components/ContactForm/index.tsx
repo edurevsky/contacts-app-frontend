@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { contactsService, refreshTokenService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
+import "./contactform.css";
 
 interface Props {
   setContacts: React.Dispatch<React.SetStateAction<IContact[]>>,
@@ -14,6 +15,7 @@ const ContactForm = ({ setContacts }: Props) => {
   const [number, setNumber] = useState<string>("");
   const [pictureUrl, setPictureUrl] = useState<string>("");
   const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const saveContact = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,6 +34,7 @@ const ContactForm = ({ setContacts }: Props) => {
       })
       .finally(() => {
         clearInputs();
+        setOpenModal(false);
       });
   }
   const clearInputs = () => {
@@ -41,27 +44,57 @@ const ContactForm = ({ setContacts }: Props) => {
     setPictureUrl("");
   }
   return (
-    <div>
-      <form className="contact-form" onSubmit={saveContact}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        </div>
-        <div>
-          <label htmlFor="number">Number</label>
-          <input type="text" id="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
-        </div>
-        <div>
-          <label htmlFor="pictureUrl">Picture Url</label>
-          <input type="text" id="pictureUrl" value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} required />
-        </div>
-        <button type="submit">Save</button>
-      </form>
-    </div>
+    <>
+      <div>
+        <button
+          onClick={() => setOpenModal(value => !value)}
+        >
+          Add Contact
+        </button>
+      </div>
+      <div
+        style={{
+          visibility: openModal ? "visible" : "hidden",
+        }}
+      >
+        <form
+          className="contact-form"
+          onSubmit={saveContact}
+        >
+          <button
+            type="button"
+            onClick={() => setOpenModal(false)}
+          >
+            Close
+          </button>
+          <div
+            className="form-input"
+          >
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+          <div
+            className="form-input"
+          >
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          </div>
+          <div
+            className="form-input"
+          >
+            <label htmlFor="number">Number</label>
+            <input type="text" id="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
+          </div>
+          <div
+            className="form-input"
+          >
+            <label htmlFor="pictureUrl">Picture Url</label>
+            <input type="text" id="pictureUrl" value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} required />
+          </div>
+          <button type="submit">Save</button>
+        </form>
+      </div>
+    </>
   );
 }
 

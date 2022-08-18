@@ -46,6 +46,9 @@ const ContactsPage = () => {
         filter={filter}
         setFilter={setFilter}
       />
+      <ContactForm
+        setContacts={setContacts}
+      />
       {pageable &&
         (<>
           <Contacts
@@ -54,9 +57,6 @@ const ContactsPage = () => {
           />
           <Pagination pageable={pageable} setPage={setPage} />
         </>)}
-      <ContactForm
-        setContacts={setContacts}
-      />
     </div>
   );
 }

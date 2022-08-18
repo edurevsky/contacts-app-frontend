@@ -24,6 +24,12 @@
 
 .form-submit button {
   width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+  color: #f4f4f4;
+  background-color: #004af1;
+  cursor: pointer;
+  border: 0;
 }
 
 .error {
