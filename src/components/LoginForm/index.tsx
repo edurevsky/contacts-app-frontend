@@ -1,5 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import "./loginform.css";
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [error, setError] = useState<string>("");
 
   const { setToken, setRefreshToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ const LoginForm = () => {
       .then((res: AxiosResponse) => {
         setToken(res.headers.authorization);
         setRefreshToken(res.data.refreshToken);
+        navigate("/");
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {

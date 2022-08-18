@@ -1,17 +1,16 @@
 import { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
-import ContactsPage from "../ContactsPage";
-import LoginPage from "../LoginPage";
 
 const AppPage = () => {
-  const { token } = useContext(AuthContext);
+  const { token, refreshToken } = useContext(AuthContext);
 
   return (
     <>
-      {token !== null ? (
-        <ContactsPage />
+      {(token && refreshToken) !== null ? (
+        <Outlet />
       ) : (
-        <LoginPage />
+        <Navigate to="/login" />
       )}
     </>
   );

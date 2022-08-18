@@ -7,6 +7,7 @@ import Pagination from "../../components/Pagination";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 import { IPageableContacts } from "../../interfaces/pageable-contacts";
+import filterContactName from "../../utils/filter-contact-name";
 
 const ContactsPage = () => {
   const [page, setPage] = useState<number>(0);
@@ -52,7 +53,7 @@ const ContactsPage = () => {
       {pageable &&
         (<>
           <Contacts
-            contacts={contacts.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))}
+            contacts={contacts.filter(contact => filterContactName(contact, filter))}
             setContacts={setContacts}
           />
           <Pagination pageable={pageable} setPage={setPage} />
