@@ -15,11 +15,6 @@ const Pagination = ({ pageable, setPage }: Props) => {
           <button onClick={() => setPage(value => value - 1)}>Previous Page</button>
         </div>
       )}
-      {/*
-      <div>
-        <span>Showing {numberOfElements} of {totalElements} Contacts</span>
-      </div> 
-      */}
       <div>
         <span>Page {pageNumber} of {totalPages}</span>
       </div>

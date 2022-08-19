@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
+import Button from "../Button";
 import "./header.css";
 
 interface Props {
@@ -24,7 +25,7 @@ const Header = ({ filter, setFilter }: Props) => {
         placeholder="Find by name"
       />
       <form onSubmit={performLogout}>
-        <button type="submit">Logout</button>
+        <Button>Logout</Button>
       </form>
     </div>
   );

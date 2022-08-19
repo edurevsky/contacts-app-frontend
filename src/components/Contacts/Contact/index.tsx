@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { contactsService, refreshTokenService } from "../../../api";
 import { AuthContext } from "../../../contexts/AuthContext/auth-context";
 import { IContact } from "../../../interfaces/contact";
+import Button from "../../Button";
 import "./contact.css";
 
 interface Props {
@@ -41,18 +42,14 @@ const Contact = ({ contact, setContacts }: Props) => {
           <p>Email: {email}</p>
         </div>
         <div className="contact-operations">
-          <button
-            className="op-btn"
+          <Button
+            isFor="delete"
             onClick={() => { deleteContact(id) }}
           >
             Delete
-          </button>
+          </Button>
           <form action={`mailto:${email}`}>
-            <button
-              className="op-btn"
-            >
-              Send mail
-            </button>
+            <Button>Send mail</Button>
           </form>
         </div>
       </div>

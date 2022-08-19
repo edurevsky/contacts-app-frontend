@@ -50,8 +50,8 @@ const ContactsPage = () => {
       <ContactForm
         setContacts={setContacts}
       />
-      {pageable &&
-        (<>
+      {pageable && (
+        <>
           <Contacts
             contacts={contacts.filter(contact => filterContactName(contact, filter))}
             setContacts={setContacts}
