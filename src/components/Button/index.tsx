@@ -9,13 +9,14 @@ interface Props {
 
 const Button = ({ children, isFor, type, onClick }: Props) => {
   const buttonColors = {
-    'add': '#00f119',
-    'delete': '#f90041'
+    'add': '#00ffa1',
+    'delete': '#f94100'
   }
   return (
     <button
       style={{
-        backgroundColor: isFor ? buttonColors[isFor] : '#005eff'
+        backgroundColor: isFor ? buttonColors[isFor] : '#007eff',
+        fontSize: "11pt"
       }}
       className="btn"
       type={type}

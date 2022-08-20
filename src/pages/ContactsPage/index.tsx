@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { contactsService, refreshTokenService } from "../../api";
 import ContactForm from "../../components/ContactForm";
 import Contacts from "../../components/Contacts";
-import Header from "../../components/Header";
+import Container from "../../components/Container";
+import Filter from "../../components/Filter";
 import Pagination from "../../components/Pagination";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
@@ -37,27 +38,25 @@ const ContactsPage = () => {
   }, [invalidateSession, page, refreshToken, setToken, token]);
 
   return (
-    <div
-      style={{
-        margin: "auto",
-        maxWidth: "1440px"
-      }}
-    >
-      <Header
-        filter={filter}
-        setFilter={setFilter}
-      />
-      <ContactForm
-        setContacts={setContacts}
-      />
-      {pageable && (
-        <>
-          <Contacts
-            contacts={contacts.filter(contact => filterContactName(contact, filter))}
-            setContacts={setContacts}
-          />
-          <Pagination pageable={pageable} setPage={setPage} />
-        </>)}
+    <div style={{ backgroundColor: "#00b1ff" }}>
+      <Container style={{ minHeight: "100vh" }}>
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+        />
+        <ContactForm
+          setContacts={setContacts}
+        />
+        {pageable && (
+          <>
+            <Contacts
+              contacts={contacts.filter(contact => filterContactName(contact, filter))}
+              setContacts={setContacts}
+            />
+            <Pagination pageable={pageable} setPage={setPage} />
+          </>
+        )}
+      </Container>
     </div>
   );
 }

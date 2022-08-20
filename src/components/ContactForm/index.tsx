@@ -47,14 +47,18 @@ const ContactForm = ({ setContacts }: Props) => {
   return (
     <>
       <div style={{ marginBottom: "5px" }}>
-        <Button onClick={() => setOpenModal(value => !value)}>Add Contact</Button>
+        <Button isFor="add" onClick={() => setOpenModal(value => !value)}>Add Contact</Button>
       </div>
-      <div style={{ visibility: openModal ? "visible" : "hidden" }}>
+      <div style={{
+        visibility: openModal ? "visible" : "hidden",
+        opacity: openModal ? "1" : "0",
+        transition: "all 0.075s ease-in"
+      }}>
         <form
           className="contact-form"
           onSubmit={saveContact}
         >
-          <Button onClick={() => setOpenModal(false)}>Close</Button>
+          <Button type="button" onClick={() => setOpenModal(false)}>Close</Button>
           <div className="form-input">
             <label htmlFor="name">Name</label>
             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />

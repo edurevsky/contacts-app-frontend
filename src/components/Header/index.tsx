@@ -1,33 +1,20 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import Button from "../Button";
-import "./header.css";
+import Container from "../Container";
 
-interface Props {
-  filter: string,
-  setFilter: React.Dispatch<React.SetStateAction<string>>
-}
-
-const Header = ({ filter, setFilter }: Props) => {
+const Header = () => {
   const { invalidateSession } = useContext(AuthContext);
 
-  const performLogout = (e: React.FormEvent<HTMLFormElement>) => {
-    invalidateSession();
-  }
-
   return (
-    <div className="header">
-      <input
-        className="filter"
-        type="text"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        placeholder="Find by name"
-      />
-      <form onSubmit={performLogout}>
-        <Button>Logout</Button>
-      </form>
-    </div>
+    <header style={{ backgroundColor: '#00a1ff' }}>
+      <Container>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h1 style={{ color: "#f4f4f4" }}>Contacts App</h1>
+          <Button onClick={() => invalidateSession()}>Logout</Button>
+        </div>
+      </Container>
+    </header>
   );
 }
 
