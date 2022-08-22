@@ -9,7 +9,7 @@ interface Props {
 
 const Button = ({ children, isFor, type, onClick }: Props) => {
   const buttonColors = {
-    'add': '#00ffa1',
+    'add': '#00ff9a',
     'delete': '#f94100'
   }
   return (

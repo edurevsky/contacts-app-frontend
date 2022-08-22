@@ -1,0 +1,14 @@
+.form-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input label {
+  font-size: 12pt;
+}
+
+.form-input input {
+  min-height: 16px;
+  border-style: solid;
+  border-radius: 5px;
+}

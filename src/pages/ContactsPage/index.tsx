@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { contactsService, refreshTokenService } from "../../api";
 import ContactForm from "../../components/ContactForm";
 import Contacts from "../../components/Contacts";
 import Container from "../../components/Container";
 import Filter from "../../components/Filter";
 import Pagination from "../../components/Pagination";
-import { AuthContext } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 import { IPageableContacts } from "../../interfaces/pageable-contacts";
 import filterContactName from "../../utils/filter-contact-name";
@@ -15,7 +15,7 @@ const ContactsPage = () => {
   const [pageable, setPageable] = useState<IPageableContacts>();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [filter, setFilter] = useState<string>("");
-  const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
+  const { token, refreshToken, setToken, invalidateSession } = useAuth();
 
   useEffect(() => {
     const fetchContacts = async () => {

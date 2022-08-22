@@ -3,6 +3,9 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
+import Container from "../Container";
+import Form from "../Form";
+import FormInput from "../Form/FormInput";
 import "./loginform.css";
 
 const LoginForm = () => {
@@ -31,38 +34,35 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="form-container">
-      <h1>Please Login</h1>
-      <small className="error">{error}</small>
-      <form
-        className="login-form"
+    <Container>
+      <Form
+        isModal={false}
+        hasTitle="Login"
         onSubmit={handleLogin}
       >
-        <div className="form-input">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-input">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <small className="error">{error}</small>
+        <FormInput
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required={true}
+        >
+          Username
+        </FormInput>
+        <FormInput
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required={true}
+        >
+          Password
+        </FormInput>
         <div className="form-submit">
           <button>Login</button>
         </div>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }
 

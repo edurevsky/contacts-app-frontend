@@ -3,7 +3,7 @@ import { contactsService, refreshTokenService } from "../../../api";
 import { AuthContext } from "../../../contexts/AuthContext/auth-context";
 import { IContact } from "../../../interfaces/contact";
 import Button from "../../Button";
-import "./contact.css";
+import "./index.css";
 
 interface Props {
   contact: IContact,

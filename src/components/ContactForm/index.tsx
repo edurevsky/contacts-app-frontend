@@ -4,7 +4,8 @@ import { contactsService, refreshTokenService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
 import Button from "../Button";
-import "./contactform.css";
+import Form from "../Form";
+import FormInput from "../Form/FormInput";
 
 interface Props {
   setContacts: React.Dispatch<React.SetStateAction<IContact[]>>,
@@ -54,29 +55,26 @@ const ContactForm = ({ setContacts }: Props) => {
         opacity: openModal ? "1" : "0",
         transition: "all 0.075s ease-in"
       }}>
-        <form
-          className="contact-form"
+        <Form
+          isModal={true}
+          hasTitle="Add Contact"
           onSubmit={saveContact}
         >
+          <FormInput id="name" value={name} onChange={(e) => setName(e.target.value)} required={true}>
+            Name
+          </FormInput>
+          <FormInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true}>
+            Email
+          </FormInput>
+          <FormInput id="number" value={number} onChange={(e) => setNumber(e.target.value)} required={true}>
+            Number
+          </FormInput>
+          <FormInput id="pictureUrl" value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} required={true}>
+            Picture Url
+          </FormInput>
+          <Button type="submit" isFor="add">Save</Button>
           <Button type="button" onClick={() => setOpenModal(false)}>Close</Button>
-          <div className="form-input">
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
-          </div>
-          <div className="form-input">
-            <label htmlFor="email">Email</label>
-            <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div className="form-input">
-            <label htmlFor="number">Number</label>
-            <input type="text" id="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
-          </div>
-          <div className="form-input">
-            <label htmlFor="pictureUrl">Picture Url</label>
-            <input type="text" id="pictureUrl" value={pictureUrl} onChange={(e) => setPictureUrl(e.target.value)} required />
-          </div>
-          <Button>Save</Button>
-        </form>
+        </Form>
       </div>
     </>
   );

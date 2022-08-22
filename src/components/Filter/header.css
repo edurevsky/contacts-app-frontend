@@ -11,7 +11,7 @@
   border-radius: 5px;
   border: 0;
   padding: 6px 10px;
-  vertical-align: middle;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .filter-input:focus {

@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
+import "./index.css";
 
 interface Props {
   children: ReactNode,
@@ -8,16 +9,12 @@ interface Props {
 const Container = ({ children, style }: Props) => {
   return (
     <div
-      style={{
-        maxWidth: "1440px",
-        padding: "0 5px",
-        margin: "auto",
-        ...style
-      }}
+      className="container"
+      style={{ ...style }}
     >
       {children}
     </div>
-  )
+  );
 }
 
 export default Container;

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 const initialValue = {
   token: localStorage.getItem("cappAccessToken"),
@@ -69,3 +69,5 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     </AuthContext.Provider>
   );
 }
+
+export const useAuth = () => useContext(AuthContext);

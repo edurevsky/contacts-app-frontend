@@ -2,7 +2,9 @@ import LoginForm from "../../components/LoginForm";
 
 const LoginPage = () => {
   return (
-    <LoginForm />
+    <div style={{ marginTop: "25vh" }}>
+      <LoginForm />
+    </div>
   );
 }
 

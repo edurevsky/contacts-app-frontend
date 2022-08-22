@@ -10,18 +10,27 @@ export const loginService = axios.create({
   baseURL: `${base}/login`
 });
 
-export const refreshTokenService = async (refreshToken: string, setToken: (value: string) => void, callback: () => void) => {
+export const refreshTokenService = async (
+  refreshToken: string,
+  setToken: (value: string) => void,
+  invalidateSession: () => void,
+  onSuccess?: () => void
+) => {
   return await axios.get(`${base}/refreshToken`, {
     headers: {
       'Authorization': `Bearer ${refreshToken}`
     }
   })
-  .then((res: AxiosResponse) => {
-    console.log("refreshing token");
-    setToken(res.headers.authorization);
-  })
-  .catch(_ => {
-    // Invalidate session
-    callback();
-  });
+    .then((res: AxiosResponse) => {
+      console.log("refreshing token");
+      setToken(res.headers.authorization);
+    })
+    .catch(_ => {
+      invalidateSession();
+    })
+    .finally(() => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    });
 }

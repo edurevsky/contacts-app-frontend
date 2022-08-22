@@ -5,4 +5,9 @@
   height: 25px;
   cursor: pointer;
   background-color: rgb(0, 94, 255);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  opacity: 90%;
 }

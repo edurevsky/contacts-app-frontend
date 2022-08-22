@@ -1,17 +1,22 @@
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext/auth-context";
-import Button from "../Button";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext/auth-context";
 import Container from "../Container";
 
 const Header = () => {
-  const { invalidateSession } = useContext(AuthContext);
+  const { invalidateSession } = useAuth();
 
   return (
     <header style={{ backgroundColor: '#00a1ff' }}>
       <Container>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <h1 style={{ color: "#f4f4f4" }}>Contacts App</h1>
-          <Button onClick={() => invalidateSession()}>Logout</Button>
+        <div style={{ color: "#f4f4f4", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <h1>Contacts App</h1>
+          <Link
+            to="/login"
+            onClick={() => invalidateSession()}
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            Logout
+          </Link>
         </div>
       </Container>
     </header>
