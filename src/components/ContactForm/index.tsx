@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { contactsService, refreshTokenService } from "../../api";
 import { AuthContext } from "../../contexts/AuthContext/auth-context";
 import { IContact } from "../../interfaces/contact";
@@ -8,20 +8,68 @@ import Form from "../Form";
 import FormInput from "../Form/FormInput";
 
 interface Props {
+  openModal: boolean,
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
   setContacts: React.Dispatch<React.SetStateAction<IContact[]>>,
+  selected: IContact | undefined,
+  setSelected: React.Dispatch<React.SetStateAction<IContact | undefined>>
 }
 
-const ContactForm = ({ setContacts }: Props) => {
+const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelected }: Props) => {
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [id, setId] = useState<number>(0);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [pictureUrl, setPictureUrl] = useState<string>("");
   const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
-  const [openModal, setOpenModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (selected) {
+      setIsUpdate(true);
+      setId(selected.id);
+      setName(selected.name);
+      setEmail(selected.email);
+      setNumber(selected.number);
+      setPictureUrl(selected.pictureUrl);
+      return;
+    }
+    setIsUpdate(false);
+    setName("");
+    setEmail("");
+    setNumber("");
+    setPictureUrl("");
+  }, [selected]);
 
   const saveContact = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const contact = { name, email, number, pictureUrl }
+    let contact = { name, email, number, pictureUrl };
+    if (isUpdate) {
+      await contactsService.put("", { 'id': id, ...contact}, {
+        headers: {
+          'Authorization': token as string
+        }
+      })
+        .then((res: AxiosResponse<IContact>) => {
+          setContacts(contacts => {
+            return contacts.map(contact => {
+              if (contact.id === id) {
+                return res.data;
+              }
+              return contact;
+            });
+          });
+        })
+        .catch(_ => {
+          refreshTokenService(refreshToken as string, setToken, invalidateSession);
+        })
+        .finally(() => {
+          clearInputs();
+          setSelected(undefined);
+          setOpenModal(false);
+        });
+      return;
+    }
     await contactsService.post("", contact, {
       headers: {
         'Authorization': token as string
@@ -44,6 +92,10 @@ const ContactForm = ({ setContacts }: Props) => {
     setEmail("");
     setNumber("");
     setPictureUrl("");
+  }
+  const handleCloseButton = () => {
+    setOpenModal(false);
+    setSelected(undefined);
   }
   return (
     <>
@@ -73,7 +125,7 @@ const ContactForm = ({ setContacts }: Props) => {
             Picture Url
           </FormInput>
           <Button type="submit" isFor="add">Save</Button>
-          <Button type="button" onClick={() => setOpenModal(false)}>Close</Button>
+          <Button type="button" onClick={handleCloseButton}>Close</Button>
         </Form>
       </div>
     </>

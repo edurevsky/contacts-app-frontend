@@ -1,13 +1,16 @@
+import React from "react";
 import { IContact } from "../../interfaces/contact";
 import Contact from "./Contact";
 import "./contacts.css";
 
 interface Props {
   contacts: IContact[],
-  setContacts: React.Dispatch<React.SetStateAction<IContact[]>>
+  setContacts: React.Dispatch<React.SetStateAction<IContact[]>>,
+  setSelected: React.Dispatch<React.SetStateAction<IContact | undefined>>,
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Contacts = ({ contacts, setContacts }: Props) => {
+const Contacts = ({ contacts, setContacts, setSelected, setOpenModal }: Props) => {
 
   return (
     <div className="contacts">
@@ -16,6 +19,8 @@ const Contacts = ({ contacts, setContacts }: Props) => {
           <Contact
             contact={c}
             setContacts={setContacts}
+            setSelected={setSelected}
+            setOpenModal={setOpenModal}
           />
         </div>
       ))}

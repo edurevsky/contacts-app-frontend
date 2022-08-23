@@ -17,6 +17,9 @@ const ContactsPage = () => {
   const [filter, setFilter] = useState<string>("");
   const { token, refreshToken, setToken, invalidateSession } = useAuth();
 
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selected, setSelected] = useState<IContact>();
+
   useEffect(() => {
     const fetchContacts = async () => {
       console.log(token);
@@ -45,13 +48,19 @@ const ContactsPage = () => {
           setFilter={setFilter}
         />
         <ContactForm
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          selected={selected}
           setContacts={setContacts}
+          setSelected={setSelected}
         />
         {pageable && (
           <>
             <Contacts
               contacts={contacts.filter(contact => filterContactName(contact, filter))}
               setContacts={setContacts}
+              setSelected={setSelected}
+              setOpenModal={setOpenModal}
             />
             <Pagination pageable={pageable} setPage={setPage} />
           </>
