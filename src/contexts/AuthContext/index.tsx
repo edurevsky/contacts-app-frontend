@@ -74,10 +74,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const invalidateSession = () => {
     deleteToken();
     deleteRefreshToken();
+    deleteUserId();
   }
 
   const isAuthenticated = () => {
-    return jwtToken != null && refreshJwtToken != null;
+    return jwtToken != null && refreshJwtToken != null && appUserId != null;
   }
   
   return (

@@ -3,11 +3,11 @@ import Header from "../../components/Header";
 import { useAuth } from "../../contexts/AuthContext";
 
 const AppPage = () => {
-  const { token, refreshToken } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
-      {(token && refreshToken) !== null ? (
+      {isAuthenticated() ? (
         <>
           <Header />
           <Outlet />
