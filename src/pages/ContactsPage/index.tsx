@@ -5,7 +5,7 @@ import Contacts from "../../components/Contacts";
 import Container from "../../components/Container";
 import Filter from "../../components/Filter";
 import Pagination from "../../components/Pagination";
-import { useAuth } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext";
 import { IContact } from "../../interfaces/contact";
 import { IPageableContacts } from "../../interfaces/pageable-contacts";
 import filterContactName from "../../utils/filter-contact-name";

@@ -8,6 +8,11 @@ interface Props {
 const Pagination = ({ pageable, setPage }: Props) => {
   const { totalPages, last, first } = pageable
   const pageNumber = pageable.pageable.pageNumber + 1
+  if (totalPages === 0) {
+    return (
+      <></>
+    );
+  }
   return (
     <div>
       {!first && (

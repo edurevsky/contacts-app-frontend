@@ -1,6 +1,6 @@
 import React from "react";
 import { contactsService, refreshTokenService } from "../../../api";
-import { useAuth } from "../../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../../contexts/AuthContext";
 import { IContact } from "../../../interfaces/contact";
 import Button from "../../Button";
 import "./index.css";

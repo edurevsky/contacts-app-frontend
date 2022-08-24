@@ -1,8 +1,8 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginService } from "../../api";
-import { AuthContext } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext";
 import Container from "../Container";
 import Form from "../Form";
 import FormInput from "../Form/FormInput";
@@ -14,7 +14,7 @@ const LoginForm = () => {
 
   const [error, setError] = useState<string>("");
 
-  const { setToken, setRefreshToken } = useContext(AuthContext);
+  const { setToken, setRefreshToken, setUserId } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,6 +24,7 @@ const LoginForm = () => {
       .then((res: AxiosResponse) => {
         setToken(res.headers.authorization);
         setRefreshToken(res.data.refreshToken);
+        setUserId(res.data.userId);
         navigate("/");
       })
       .catch((error: AxiosError) => {

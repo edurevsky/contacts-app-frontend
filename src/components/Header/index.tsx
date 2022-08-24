@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext";
 import Container from "../Container";
 
 const Header = () => {

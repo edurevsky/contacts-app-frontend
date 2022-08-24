@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { contactsService, refreshTokenService } from "../../api";
-import { AuthContext } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext";
 import { IContact } from "../../interfaces/contact";
 import Button from "../Button";
 import Form from "../Form";
@@ -22,7 +22,7 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
   const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [pictureUrl, setPictureUrl] = useState<string>("");
-  const { token, refreshToken, setToken, invalidateSession } = useContext(AuthContext);
+  const { userId, token, refreshToken, setToken, invalidateSession } = useAuth();
 
   useEffect(() => {
     if (selected) {
@@ -45,7 +45,7 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
     event.preventDefault();
     let contact = { name, email, number, pictureUrl };
     if (isUpdate) {
-      await contactsService.put("", { 'id': id, ...contact}, {
+      await contactsService.put("", { 'id': id, ...contact }, {
         headers: {
           'Authorization': token as string
         }
@@ -70,7 +70,7 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
         });
       return;
     }
-    await contactsService.post("", contact, {
+    await contactsService.post("", { ...contact, userId }, {
       headers: {
         'Authorization': token as string
       }

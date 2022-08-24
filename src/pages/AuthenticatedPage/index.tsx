@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import Header from "../../components/Header";
-import { useAuth } from "../../contexts/AuthContext/auth-context";
+import { useAuth } from "../../contexts/AuthContext";
 
 const AppPage = () => {
   const { token, refreshToken } = useAuth();
