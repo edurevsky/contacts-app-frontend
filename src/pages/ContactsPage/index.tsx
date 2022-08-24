@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { contactsService, refreshTokenService } from "../../api";
+import { findPaginatedContacts, refreshTokenService } from "../../api";
 import ContactForm from "../../components/ContactForm";
 import Contacts from "../../components/Contacts";
 import Container from "../../components/Container";
@@ -16,18 +16,13 @@ const ContactsPage = () => {
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [filter, setFilter] = useState<string>("");
   const { token, refreshToken, setToken, invalidateSession } = useAuth();
-
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<IContact>();
 
   useEffect(() => {
     const fetchContacts = async () => {
       console.log(token);
-      return await contactsService.get<IPageableContacts>(`?page=${page}&size=15`, {
-        headers: {
-          'Authorization': token as string
-        }
-      })
+      return await findPaginatedContacts(page, token as string)
         .then(res => {
           console.log("ok");
           setPageable(res.data);

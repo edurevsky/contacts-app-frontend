@@ -1,5 +1,5 @@
 import React from "react";
-import { contactsService, refreshTokenService } from "../../../api";
+import { deleteContact, refreshTokenService } from "../../../api";
 import { useAuth } from "../../../contexts/AuthContext";
 import { IContact } from "../../../interfaces/contact";
 import Button from "../../Button";
@@ -16,12 +16,8 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
   const { token, refreshToken, setToken, invalidateSession } = useAuth();
   const { id, name, number, email, pictureUrl } = contact;
 
-  const deleteContact = async (id: number) => {
-    await contactsService.delete(`${id}`, {
-      headers: {
-        'Authorization': token as string
-      }
-    })
+  const handleDeleteContact = async (id: number) => {
+    await deleteContact(id, token as string)
       .then(_ => setContacts(contacts => contacts.filter(c => c.id !== id)))
       .catch(_ => {
         alert("An error occurred");
@@ -50,7 +46,7 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
         <div className="contact-operations">
           <Button
             isFor="delete"
-            onClick={() => { deleteContact(id); }}
+            onClick={() => { handleDeleteContact(id); }}
           >
             Delete
           </Button>

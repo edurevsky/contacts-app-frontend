@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
-import { contactsService, refreshTokenService } from "../../api";
+import { refreshTokenService, saveContact, updateContact } from "../../api";
 import { useAuth } from "../../contexts/AuthContext";
 import { IContact } from "../../interfaces/contact";
 import Button from "../Button";
@@ -41,15 +41,11 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
     setPictureUrl("");
   }, [selected]);
 
-  const saveContact = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveContact = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let contact = { name, email, number, pictureUrl };
     if (isUpdate) {
-      await contactsService.put("", { 'id': id, ...contact }, {
-        headers: {
-          'Authorization': token as string
-        }
-      })
+      await updateContact({ ...contact, id }, token as string)
         .then((res: AxiosResponse<IContact>) => {
           setContacts(contacts => {
             return contacts.map(contact => {
@@ -70,11 +66,7 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
         });
       return;
     }
-    await contactsService.post("", { ...contact, userId }, {
-      headers: {
-        'Authorization': token as string
-      }
-    })
+    await saveContact({ ...contact, 'userId': userId! }, token as string)
       .then((res: AxiosResponse) => {
         setContacts(contacts => [...contacts, res.data]);
       })
@@ -110,7 +102,7 @@ const ContactForm = ({ openModal, setOpenModal, setContacts, selected, setSelect
         <Form
           isModal={true}
           hasTitle="Add Contact"
-          onSubmit={saveContact}
+          onSubmit={handleSaveContact}
         >
           <FormInput id="name" value={name} onChange={(e) => setName(e.target.value)} required={true}>
             Name
