@@ -7,7 +7,11 @@ const initialValue = {
   refreshToken: localStorage.getItem("cappRefreshToken"),
   setRefreshToken: () => { },
   deleteRefreshToken: () => { },
-  invalidateSession: () => { }
+  invalidateSession: () => { },
+  userId: localStorage.getItem("cappUserId"),
+  setUserId: () => { },
+  deleteUserId: () => { },
+  isAuthenticated: () => false
 }
 
 interface ContextType {
@@ -17,7 +21,11 @@ interface ContextType {
   refreshToken: string | null,
   setRefreshToken: (value: string) => void,
   deleteRefreshToken: () => void,
-  invalidateSession: () => void
+  invalidateSession: () => void,
+  userId: string | null,
+  setUserId: (value: string) => void,
+  deleteUserId: () => void,
+  isAuthenticated: () => boolean
 }
 
 export const AuthContext = createContext<ContextType>(initialValue);
@@ -25,6 +33,7 @@ export const AuthContext = createContext<ContextType>(initialValue);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [jwtToken, setJwtToken] = useState<string | null>(initialValue.token);
   const [refreshJwtToken, setRefreshJwtToken] = useState<string | null>(initialValue.refreshToken);
+  const [appUserId, setAppUserId] = useState<string | null>(initialValue.userId);
 
   const token = jwtToken;
 
@@ -50,9 +59,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setRefreshJwtToken(null);
   }
 
+  const userId = appUserId;
+
+  const setUserId = (value: string) => {
+    setAppUserId(value);
+    localStorage.setItem("cappUserId", value);
+  }
+
+  const deleteUserId = () => {
+    localStorage.removeItem("cappUserId");
+    setAppUserId(null);
+  }
+
   const invalidateSession = () => {
     deleteToken();
     deleteRefreshToken();
+  }
+
+  const isAuthenticated = () => {
+    return jwtToken != null && refreshJwtToken != null;
   }
   
   return (
@@ -63,7 +88,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       refreshToken, 
       setRefreshToken, 
       deleteRefreshToken,
-      invalidateSession
+      userId,
+      setUserId,
+      deleteUserId,
+      invalidateSession,
+      isAuthenticated
     }}>
       {children}
     </AuthContext.Provider>
