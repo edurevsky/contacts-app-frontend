@@ -3,5 +3,6 @@ export interface IContact {
   name: string, 
   email: string, 
   number: string, 
-  pictureUrl: string
+  pictureUrl: string,
+  favorite: boolean
 }
