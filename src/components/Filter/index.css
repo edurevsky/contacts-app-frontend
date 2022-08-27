@@ -1,11 +1,15 @@
 .filter {
-  display: flex;
-  align-items: center;
-  padding: 1rem 0;
+  padding: 16px 0;
+}
+
+.filter-wrapper {
   column-gap: 8px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .filter-input {
+  height: 30px;
   box-sizing: border-box;
   width: 100%;
   background-color: #f4f4f4;
@@ -20,10 +24,12 @@
 }
 
 .filter-select {
+  box-sizing: border-box;
   border: 0;
+  height: 30px;
   border-radius: 5px;
   padding: 5px;
-  min-height: 100%;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .filter-select:focus {

@@ -1,5 +1,7 @@
+import { AxiosResponse } from "axios";
 import React from "react";
-import { deleteContact, refreshTokenService } from "../../../api";
+import { FaStar } from "react-icons/fa";
+import { deleteContact, favoriteContact, refreshTokenService } from "../../../api";
 import { useAuth } from "../../../contexts/AuthContext";
 import { IContact } from "../../../interfaces/contact";
 import Button from "../../Button";
@@ -14,7 +16,7 @@ interface Props {
 
 const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => {
   const { token, refreshToken, setToken, invalidateSession } = useAuth();
-  const { id, name, number, email, pictureUrl } = contact;
+  const { id, name, number, email, pictureUrl, favorite } = contact;
 
   const handleDeleteContact = async (id: number) => {
     await deleteContact(id, token as string)
@@ -28,6 +30,24 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
     setSelected(contact);
     setOpenModal(true);
   }
+
+  const handleFavoriteContact = async (id: number) => {
+    await favoriteContact(id, token as string)
+      .then((res: AxiosResponse) => {
+        setContacts(contacts => {
+          return contacts.map(contact => {
+            if (contact.id === id) {
+              return res.data;
+            }
+            return contact;
+          });
+        });
+      })
+      .catch(_ => {
+        console.log(_);
+        refreshTokenService(refreshToken!, setToken, invalidateSession);
+      });
+  }
   return (
     <div className="contact">
       <div className="contact-wrapper">
@@ -37,6 +57,15 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
           </div>
           <div className="contact-name">
             <h2>{name}</h2>
+          </div>
+          <div className="contact-favorite">
+            <FaStar 
+              style={{
+                cursor: "pointer",
+                color: favorite ? "#ffac00" : "#aaa"
+              }}
+              onClick={() => handleFavoriteContact(id)} 
+            />
           </div>
         </div>
         <div className="contact-info">

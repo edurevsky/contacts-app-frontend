@@ -53,3 +53,7 @@
   cursor: pointer;
   background-color: rgb(0, 94, 255);
 }
+
+.contact-favorite {
+  align-self: flex-start;
+}

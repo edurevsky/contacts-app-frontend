@@ -28,6 +28,10 @@ export const deleteContact = (id: number, token: string) => {
   return contactsService.delete(`${id}`, { headers: { 'Authorization': token } });
 }
 
+export const favoriteContact = (id: number, token: string) => {
+  return contactsService.put(`/favorite/${id}`, {}, { headers: { 'Authorization': token } });
+}
+
 export const refreshTokenService = async (
   refreshToken: string,
   setToken: (value: string) => void,
