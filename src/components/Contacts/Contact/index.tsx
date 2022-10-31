@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import React from "react";
+import React, { useCallback } from "react";
 import { FaStar } from "react-icons/fa";
 import { deleteContact, favoriteContact, refreshTokenService } from "../../../api";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -26,6 +26,12 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
         refreshTokenService(refreshToken as string, setToken, invalidateSession);
       });
   }
+
+  const deleteContactCallback = useCallback(
+    handleDeleteContact, 
+    [invalidateSession, refreshToken, setContacts, setToken, token]
+  );
+
   const handleUpdateButton = () => {
     setSelected(contact);
     setOpenModal(true);
@@ -48,6 +54,11 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
         refreshTokenService(refreshToken!, setToken, invalidateSession);
       });
   }
+
+  const favoriteContactCallback = useCallback(
+    handleFavoriteContact,
+    [invalidateSession, refreshToken, setContacts, setToken, token]
+  );
   return (
     <div className="contact">
       <div className="contact-wrapper">
@@ -64,7 +75,7 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
                 cursor: "pointer",
                 color: favorite ? "#ffac00" : "#aaa"
               }}
-              onClick={() => handleFavoriteContact(id)} 
+              onClick={() => favoriteContactCallback(id)} 
             />
           </div>
         </div>
@@ -75,7 +86,7 @@ const Contact = ({ contact, setContacts, setSelected, setOpenModal }: Props) => 
         <div className="contact-operations">
           <Button
             isFor="delete"
-            onClick={() => { handleDeleteContact(id); }}
+            onClick={() => deleteContactCallback(id)}
           >
             Delete
           </Button>
