@@ -12,7 +12,7 @@ const Header = () => {
           <h1>Contacts App</h1>
           <Link
             to="/login"
-            onClick={() => invalidateSession()}
+            onClick={invalidateSession}
             style={{ color: "inherit", textDecoration: "none" }}
           >
             Logout

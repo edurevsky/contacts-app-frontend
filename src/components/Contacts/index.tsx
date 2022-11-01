@@ -10,17 +10,14 @@ interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Contacts = ({ contacts, setContacts, setSelected, setOpenModal }: Props) => {
-
+const Contacts = ({ contacts, ...rest }: Props) => {
   return (
     <div className="contacts">
       {contacts.map(c => (
         <div key={c.id}>
           <Contact
             contact={c}
-            setContacts={setContacts}
-            setSelected={setSelected}
-            setOpenModal={setOpenModal}
+            {...rest}
           />
         </div>
       ))}

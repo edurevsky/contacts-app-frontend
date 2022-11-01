@@ -65,7 +65,7 @@ const ContactsPage = () => {
           setContacts={setContacts}
           setSelected={setSelected}
         />
-        {pageable && (
+        {pageable ? (
           <>
             <Contacts
               contacts={contacts.filter(contact => filterContactName(contact, nameFilter)).filter(contact => favFilters(favoriteFilter)(contact))}
@@ -75,7 +75,7 @@ const ContactsPage = () => {
             />
             <Pagination pageable={pageable} setPage={setPage} />
           </>
-        )}
+        ) : null}
       </Container>
     </div>
   );

@@ -10,18 +10,12 @@ interface Props {
   required?: boolean | undefined
 }
 
-const FormInput = ({ id, children, type, value, placeholder, onChange, required }: Props) => {
+const FormInput = (props: Props) => {
+  const { id, children, ...rest } = props;
   return (
     <div className="form-input">
       <label htmlFor={id}>{children}</label>
-      <input 
-        type={type} 
-        id={id} 
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        required={required}
-      />
+      <input {...rest} />
     </div>
   );
 }

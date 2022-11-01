@@ -7,7 +7,7 @@ interface Props {
   onClick?: () => void
 }
 
-const Button = ({ children, isFor, type, onClick }: Props) => {
+const Button = ({ children, isFor, ...rest }: Props) => {
   const buttonColors = {
     'add': '#00ff9a',
     'delete': '#f94100'
@@ -19,8 +19,7 @@ const Button = ({ children, isFor, type, onClick }: Props) => {
         fontSize: "11pt"
       }}
       className="btn"
-      type={type}
-      onClick={onClick}
+      {...rest}
     >
       {children}
     </button>
